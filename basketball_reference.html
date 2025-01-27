@@ -7,32 +7,28 @@
     <style></style>
 </head>
 <body>
+    
+
 <script>
-const JSON = [
-    {
-        "name":"Curry",
-        "age":"35",
-        "height":"6'4",
-        "weight":"188lbs",
-        "ppg":"25",
-        "reb":"3",
-        "asg":"6",
-        "winning_rate":"50%"
-    },
-    {
-        "name":"James",
-        "age":"40",
-        "height":"6'8",
-        "weight":"205lbs",
-        "ppg":"27",
-        "reb":"7",
-        "asg":"7",
-        "winning_rate":"60%"
-    }
-] 
-for (let i = 0 ; i < 2 ; i++) {
-    console.log(json[i].name, json[i].age, json[i].height, json[i].weight, json[i].ppg, json[i].reb, json[i].asg, json[i].winning_rate)
-}
+
+fetch('http://localhost:3000/players') // 確保端口號與後端一致
+    .then(response => response.json())
+    .then(json => {
+        // 遍歷數據並顯示在控制台
+        for (let i = 0; i < json.length; i++) {
+            console.log(
+                json[i].name,
+                json[i].age,
+                json[i].height,
+                json[i].weight,
+                json[i].ppg,
+                json[i].reb,
+                json[i].asg,
+                json[i].winning_rate
+            );
+        }
+    })
+    .catch(error => console.error('Error fetching players:', error));
 </script>
 </body>
 </html>

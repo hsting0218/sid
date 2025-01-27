@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>產品展示</title>
+    <style>
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            text-align: center;
+        }
+        .product-card img {
+            max-width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="product-list"></div>
+
+    <script>
+        async function fetchProducts() {
+            try {
+                const response = await fetch('http://localhost:3000/api/products');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const products = await response.json();
+                
+                const container = document.getElementById('product-list');
+                container.innerHTML = products.map(product => `
+                    <div class="product-card">
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p>價格: ${product.price} 元</p>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Fetch error:', error);
+                const container = document.getElementById('product-list');
+                container.innerHTML = '<p>無法載入產品資料。</p>';
+            }
+        }
+
+        fetchProducts();
+    </script>
+</body>
+</html>
