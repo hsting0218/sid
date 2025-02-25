@@ -3,7 +3,7 @@ const express = require('express'); // 引入 Express
 const cors = require('cors'); // 引入 CORS 中間件
 const mongoose = require('mongoose'); // 引入 Mongoose
 const app = express(); // 初始化 Express 應用
-const PORT = process.env.PORT || 3000; // 設置端口
+const port = process.env.PORT || 3000; // 設置端口
 
 // 啟用 CORS 中間件（解決跨域問題）
 app.use(cors());
