@@ -1,0 +1,3 @@
+[submodule "public/example"]
+	path = public/example
+	url = https://github.com/hsting0218/sid.git
