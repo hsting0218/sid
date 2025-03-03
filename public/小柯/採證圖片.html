@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>採證圖片</title>
+    <style>
+        body {
+            width: 1344px;
+            height: 1669.38px;
+            border-radius: 20px;
+            gap: 24px;
+            padding: 24px;
+            background: rgba(255, 255, 255, 1);
+            font-family: Arial, sans-serif;
+            display: flex;
+            /* justify-content: center; */
+            align-items: center;
+            flex-direction: column;
+            box-shadow: 0px 5px 16px 0px rgba(0, 0, 0, 0.28);
+
+        }
+        .closebutton {
+            width: 24px; /* 根據實際圖片大小調整 */
+            height: 24px;
+            cursor: pointer; /* 讓滑鼠變成點擊手勢 */
+        }
+        .edit {
+            width: 1248px;
+            height: 29px;
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 29.05px;
+            letter-spacing: 0%;
+            text-align: center;
+        }
+        .bar {
+            width: 1300px;
+            height: 2px; /* 設定分隔線的厚度 */
+            border: none; /* 移除預設邊框 */
+            background: linear-gradient(90deg, rgba(56, 57, 58, 0) 0%, #38393A 13.37%, rgba(56, 57, 58, 0.15625) 99.04%);
+        }
+        .content-wrapper {
+            display: flex;
+            gap: 24px; /* 控制 container 和 piccontainer 之間的間距 */
+            align-items: flex-start; /* 保持頂部對齊 */
+            flex-direction: row;
+            width: 100%;
+            justify-content: center;
+        }
+        .container {
+            width: 920px;
+            height: 479px;
+            display: flex;
+            flex-direction: column; /* 讓內部元素垂直排列 */
+            background: #f8f8f8;
+            padding: 24px;
+            border-radius: 16px;
+        }
+        .first-line, .second-line, .third-line, .forth-line {
+            display: flex;
+            width: 920px;
+            height: 63px;
+            gap: 40px;
+            justify-content: space-between;            
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        h3 {
+            width: 440px;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 20px;
+            text-align: left;
+            align-items: center;
+            margin: 0 0 6px 0;
+        }
+        .left-section, .right-section {
+            width: 440px;
+            display: flex;
+            flex-direction: column; /* 讓內容上下排列 */
+        }
+
+        .workinfo-title {  
+            width: 920px;
+            height: 19px;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 19.36px;
+            text-align: left;
+            margin-bottom: 8px;
+        }
+        .worinfo-content {
+            width: 920px;
+            height: 108px;
+            font-family: Inter;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            text-align: left;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+            border: 1px solid rgba(34, 34, 34, 1);
+            border-radius: 8px;
+            box-sizing: border-box;
+            background-color: rgba(249, 249, 249, 1);
+            white-space: pre-wrap; /* 保留換行並自動換行 */
+            padding: 8px; /* 內距，讓文字不會貼邊 */
+            resize: none; /* 禁止手動調整大小 */
+            overflow: hidden; /* 隱藏多餘內容，防止溢出 */
+        }
+        .input-field {
+            width: 440px;
+            height: 36px;
+            padding: 8px 16px;
+            border: 1px solid rgba(34, 34, 34, 1);
+            border-radius: 8px;
+            box-sizing: border-box;
+            background-color: rgba(249, 249, 249, 1);
+            margin-bottom: 16px; /* 標題與輸入框之間增加距離 */
+        }
+        .buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            width: 128px;
+            height: 44px;
+            margin: 10px 24px 0 792px;
+            gap: 16px;
+        }
+        .cancel {
+            width: 56px;
+            height: 44px;
+            padding: 0 14px 0 14px;
+            border-radius: 6px;
+            border:1px solid rgba(27, 168, 185, 1);
+            cursor: pointer;
+            background-color: rgba(249, 249, 249, 1);  
+            color: rgba(27, 168, 185, 1); /* 直接設定按鈕文字顏色 */ 
+            font-size: 14px;
+            line-height: 17px;
+            white-space: nowrap; /* 確保文字不會自動換行 */
+        }
+        .confirm {
+            width: 56px;
+            height: 44px;
+            padding: 0 14px 0 14px;
+            border-radius: 6px;
+            border: 0px;
+            cursor: pointer;
+            background-color: rgba(27, 168, 185, 1);
+            color: rgba(255, 255, 255, 1); /* 直接設定按鈕文字顏色 */  
+            font-size: 14px;
+            line-height: 17px;
+            white-space: nowrap; /* 確保文字不會自動換行 */
+        }
+        /* 如果還想針對 span 設定 */
+        .cancel-text {
+            display: inline;
+            color: rgba(27, 168, 185, 1);
+            background-color: transparent; /* 避免影響按鈕 */
+        }
+
+        .confirm-text {            
+            display: inline;
+            color: rgba(255, 255, 255, 1);
+            background-color: transparent;
+        }
+
+        .piccontainer {
+            display: flex;
+            width: 312px;
+            height: 527px;
+            opacity: 0.8;
+            border-radius: 16px;
+            background-color: #F7F7F7;
+            flex-direction: column;
+        }
+        .picheader {
+            display: flex;
+            width: 280px;
+            height: 30px;
+            gap: 4px;
+            flex-direction: row;
+            margin: 24px 16px 0px;
+        }
+        .pictitle {
+            width: 212px;
+            height: 22px;
+            font-family: Inter;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 21.78px;
+            letter-spacing: 0%;
+            text-align: left;
+        }
+        .qrcode-container {
+            display: flex;
+            width: 64px;
+            height: 30px;
+            gap: 4px;
+            flex-direction: row;
+        }
+        .button{
+            width: 30px;
+            height: 30px;
+            gap: 10px;
+            border-radius: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #17B6C9;
+            cursor: pointer;
+        }
+        .image-box {
+            width: 280px;
+            height: 370px;
+            border-radius: 16px;
+            margin: 16px;
+        }
+        .artwork-info {
+            display: flex;
+            width: 280px;
+            height: 47px;
+            flex-direction: row;
+            margin: 0 16px 24px;
+            align-items: center;
+        }
+        .left-part, .right-part {
+            width: 120px;
+            height: 47px;
+            flex-direction: column; /* 讓內容上下排列 */
+        }
+        .left-part {
+            margin-right: 40px;
+        }
+        .info-line1 {
+            width: 120;
+            height: 19;
+            font-family: Inter;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 19.36px;
+            letter-spacing: 0%;
+            margin: 0 0 8px;
+            box-sizing: border-box;
+        }
+        .info-line2 {
+            width: 120;
+            height: 20;
+            font-family: Inter;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 0%;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .infoheader {
+            position: relative;
+            height: 29px;
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 29.05px;
+            text-align: center;
+            margin: 0 auto;
+            padding: 1px 426px 1px 564px;
+            white-space: nowrap; /* 確保文字不會自動換行 */
+        }
+        .signature-notification {
+            width: 98px;
+            height: 22px;
+            border-radius: 2px;
+            padding-top: 2px;
+            padding-right: 8px;
+            padding-bottom: 2px;
+            padding-left: 8px;
+            background: rgba(73, 168, 178, 1);
+            text-align: center;
+            align-items: center;
+            font-family: Roboto;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 22px;
+            margin: 0px 24px;
+            color: white;
+            white-space: nowrap; /* 確保文字不會自動換行 */
+            
+        }
+        .fifthcontainer {
+            width: 1293px;
+            height: 804px;
+            background: rgba(247, 247, 247, 1);
+            border-radius: 16px;
+            gap: 16px;            
+        }
+
+        .tabcontainer {
+            display: flex;
+            justify-content: flex-start;
+            margin: 24px 0 16px 16px;
+            position: relative;
+            padding-bottom: 2px; /* 增加 padding 以便底線顯示 */
+            gap: 60px;
+        }
+
+        .tabcontainer::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .tab {
+            font-size: 16px;
+            font-weight: 700;
+            color: #5e5e5e;
+            padding: 0 0 8px 0;
+            cursor: pointer;
+            width: 136px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            line-height: 19.36px;
+        }
+
+        .tab.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0px; /* 與 .tabcontainers 群的底線重合 */
+            width: 100%;
+            border-bottom: 3px solid #17b6c9;            
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .tab.active {
+            color: #17b6c9;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(239.4px, 1fr));
+            gap: 16px;
+            margin: 16px ;
+        }
+
+        .image-card {
+            position: relative;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 240px;
+            height: 226px;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-number {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: #FFFFFF;
+            padding-top: 8px;
+            padding-right: 10px;
+            padding-bottom: 8px;
+            padding-left: 10px;
+            gap: 10px;
+            border-radius: 100px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-number span {
+            width: 30px;
+            height: 34px;
+            font-family: 'Antic Didone', serif;
+            font-weight: 400;
+            font-size: 26.5px;
+            letter-spacing: 0%;
+            background:#FFFFFF;
+            color: #222222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .detailcontainer {
+            width: 1293px;
+            height: 871.4px;
+            background: rgba(247, 247, 247, 1);
+            border-radius: 16px;
+            gap: 16px;            
+        }
+        .signature-row1 {
+            display: flex;
+            width: 1261px;
+            height: 107px;
+            gap: 40px;
+            justify-content: space-between;            
+            box-sizing: border-box;
+            margin: 0 16px;
+            align-items: flex-start;
+            position: relative;
+        }
+        .signature-row2 {
+            display: flex;
+            width: 1261px;
+            height: 47px;
+            gap: 40px;
+            justify-content: space-between;            
+            box-sizing: border-box;
+            margin: 16px ;
+            align-items: flex-start;
+            position: relative;
+        }
+        .signature-row3 {
+            display: flex;
+            width: 1261px;
+            height: 63px;
+            gap: 40px;
+            justify-content: space-between;            
+            box-sizing: border-box;
+            margin: 16px ;
+            align-items: flex-start;
+            position: relative;
+        }
+        .signature-row4 {
+            display: flex;
+            width: 1261px;
+            height: 47px;
+            box-sizing: border-box;
+            margin: 16px ;
+            align-items: flex-start;
+            position: relative;
+        }
+        .signature-row5 {
+            display: flex;
+            width: 1261px;
+            height: 19px;        
+            box-sizing: border-box;
+            margin: 0 16px;
+            align-items: flex-start;
+            position: relative;
+        }        
+        .signature-row6 {
+            display: flex;
+            width: 1261px;
+            height: 343.41px;
+            gap: 40px;
+            justify-content: space-between;            
+            box-sizing: border-box;
+            margin: 8px 16px 0;
+            align-items: flex-start;
+            position: relative;
+            flex-direction: row;
+            opacity: 0.8;
+        }          
+
+        h4 {
+            width: 610.5px;
+            height: 19px;
+            font-family: Inter;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 19.36px;
+            margin: 0 0 8px;
+            color: rgba(38, 38, 38, 1);        
+        }
+        .signplace {
+            width: 610.5px;
+            height: 80px;
+            border-bottom: 1px solid rgba(34, 34, 34, 1)
+        }
+        .shortinfo {
+            width: 610.5px;
+            height: 20px;
+            color: rgba(34, 34, 34, 1);
+        }
+        .rowleft, .rowright {
+            display: flex;
+            flex-direction: column; /* 讓內容上下排列 */
+            justify-content: space-between;
+        }
+        .info-input-field {
+            width: 610.5px;
+            height: 36px;
+            padding: 8px 16px;
+            border: 1px solid rgba(34, 34, 34, 1);
+            border-radius: 8px;
+            box-sizing: border-box;
+            background-color: rgba(249, 249, 249, 1);
+            margin-bottom: 16px; /* 標題與輸入框之間增加距離 */
+        }
+        .signbuttons {
+            display: flex;
+            width: 610.5px;
+            height: 65px;
+            gap: 16px;
+            justify-content: right;
+
+        }
+
+        .signbutton {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .signicon {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            font-size: 14px;
+            align-items: flex-end;
+        }
+
+        .signbutton span {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div class="edit">編輯項目</div>
+        <img src="C:\Users\USER\Desktop\藝信coding\project\img\Close Button.png" class="closebutton" >
+    </div>    
+    <div class="bar"></div>
+    <div class="content-wrapper">
+        <div class="container">
+            <div class="first-line">
+                <div class="left-section">
+                    <h3>藝術家</h3>
+                    <input class="input-field" type="text" value="霍剛 Ho Kan">
+                </div>
+                <div class="right-section">
+                    <h3>尺寸</h3>
+                    <input class="input-field" type="text" value="200.0 × 100.0 cm">
+                </div>
+            </div>
+            <div class="second-line">
+                <div class="left-section">
+                    <h3>創作年代</h3>
+                    <input class="input-field" type="text" value="2023">
+                </div>
+                <div class="right-section">
+                    <h3>創作媒材</h3>
+                    <input class="input-field" type="text" value="油彩 畫布">
+                </div>           
+            </div>
+            <div class="third-line">
+                <div class="left-section">
+                    <h3>收藏人</h3>
+                    <input class="input-field" type="text">
+                </div>
+                <div class="right-section">
+                    <h3>收藏年份</h3>
+                    <input class="input-field" type="text" value="2024">
+                </div>
+            </div>
+            <div class="forth-line">
+                <div class="left-section">
+                    <h3>委託單位</h3>
+                    <input class="input-field" type="text" value="采泥藝術">
+                </div>
+                <div class="right-section">
+                    <h3>影片網址</h3>
+                    <input class="input-field" type="text" value="***">
+                </div>     
+            </div>
+            <div class="workinfo">
+                <div class="workinfo-title">
+                    <h3>作品簡介</h3>
+                </div>
+                <textarea class="worinfo-content">《2023-028》是一幅充滿動態與情感張力的抽象畫作，運用錯綜複雜的筆觸與層疊的色彩展現時間與空間的交錯。濃烈的對比色與流動的線條營造出內在情緒的碰撞，既有瞬間爆發的激情，也帶有細膩的沉思。這件作品彷彿在探索無形的界限，讓觀者在自由詮釋中感受畫布內的能量與深度。</textarea>
+
+            </div>
+            <div class="buttons">
+                <button class="cancel">取消</button>
+                <button class="confirm">確定</button>
+            </div>
+        </div>
+        <div class="piccontainer">
+            <div class="picheader">
+                <div class="pictitle">作品全圖</div>
+                <div class="qrcode-container">
+                    <div class="button">
+                        <img src="C:\Users\USER\Desktop\藝信coding\project\img\fullqrcode.png" width="30" height="30" alt="QR Code">
+                    </div>                        
+                    <div class="button"> 
+                        <img src="C:\Users\USER\Desktop\藝信coding\project\img\fallupload.png" width="30" height="30" alt="Upload">                       
+                    </div>
+                </div>
+            </div>
+            <img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_selfie.png" class="image-box" alt="img">
+            <div class="artwork-info">
+                <div class="left-part">
+                    <p class="info-line1">作品名稱</p>
+                    <p class="info-line2">抽象2023-028</p>
+                </div>
+                <div class="right-part">
+                    <p class="info-line1">作品編號</p>
+                    <p class="info-line2">TW-20241011-1</p>
+                </div>    
+            </div>   
+        </div>
+    </div>
+    <div style="display: flex; flex-direction: row;">
+        <div class="infoheader">上鍊聲明書資訊</div>
+        <div class="signature-notification">已完成數位簽署</div>
+    </div>   
+
+    <div class="fifthcontainer">
+        <!-- 標籤選單 -->
+        <div class="tabcontainer">
+            <div class="tab active" onclick="showTab(event, 'images')">採證圖片(20)</div>
+            <div class="tab" onclick="showTab(event, 'details')">詳細資訊</div>
+            <div class="tab" onclick="showTab(event, 'legal')">法律諮詢</div>
+            <div class="tab" onclick="showTab(event, 'preview')">預覽證書</div>
+        </div>
+    
+        <!-- 圖片網格 -->
+        <div id="images" class="tab-content">
+            <div class="grid">
+                    <!-- 15 張圖片 -->
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_part1.png"><div class="image-number"><span>01</span></div></div>
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_part2.png"><div class="image-number"><span>02</span></div></div>
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_part3.png"><div class="image-number"><span>03</span></div></div>
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_part4.png"><div class="image-number"><span>04</span></div></div>
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_selfie.png"><div class="image-number"><span>05</span></div></div>
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_selfie.png"><div class="image-number"><span>06</span></div></div>
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_selfie.png"><div class="image-number"><span>07</span></div></div>
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_selfie.png"><div class="image-number"><span>08</span></div></div>
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_selfie.png"><div class="image-number"><span>09</span></div></div>
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_selfie.png"><div class="image-number"><span>10</span></div></div>
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_part1.png"><div class="image-number"><span>11</span></div></div>
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_part2.png"><div class="image-number"><span>12</span></div></div>
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_part3.png"><div class="image-number"><span>13</span></div></div>
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_part4.png"><div class="image-number"><span>14</span></div></div>
+                    <div class="image-card"><img src="C:\Users\USER\Desktop\藝信coding\project\img\Y.N_selfie.png"><div class="image-number"><span>15</span></div></div>
+                </div>
+            </div>
+    
+            <!-- 詳細資訊 -->
+            <div id="details" class="tab-content" style="display:none;">
+                <div class="signature-row1">
+                    <div class="rowleft">
+                        <h4>採樣人簽名</h4>
+                        <div class="signplace">
+                            <div class="signbuttons">
+                                <div class="signbutton">
+                                    <div class="signicon">
+                                        <img src="C:\Users\USER\Desktop\藝信coding\project\img\pen.png">
+                                    </div>
+                                    <span>繪製</span>
+                                </div>
+                                <div class="signbutton">
+                                    <div class="signicon">
+                                        <img src="C:\Users\USER\Desktop\藝信coding\project\img\upload.png">
+                                    </div>
+                                    <span>上傳</span>
+                                </div>
+                            </div>         
+                        </div>                              
+                    </div>
+                    <div class="rowright">
+                        <h4>委託人簽名</h4>
+                        <div class="signplace"></div>    
+                    </div>
+                </div>
+                <div class="signature-row2">
+                    <div class="rowleft">
+                        <h4>採樣人姓名</h4>
+                        <div class="shortinfo">簡辰宇</div>                                  
+                    </div>
+                    <div class="rowright">
+                        <h4>採樣人簽署日期</h4>
+                        <div class="shortinfo">2024.10.11 | 11:17:45 AM</div>    
+                    </div>
+                </div>
+                <div class="signature-row3">
+                    <div class="rowleft">
+                        <h4>委託人姓名</h4>
+                        <input class="info-input-field" type="text" value="">                                 
+                    </div>
+                    <div class="rowright">
+                        <h4>與創作者關係</h4>
+                        <input class="info-input-field" type="text" value="">
+                    </div>
+                </div>
+                <div class="signature-row4">
+                    <div class="rowleft">
+                        <h4>採樣人簽署日期</h4>
+                        <div class="shortinfo">2024.10.11 | 11:18:51 AM</div>                                  
+                    </div>
+                </div>
+                <div class="signature-row3">
+                    <div class="rowleft">
+                        <h4>採樣人簽署經緯度</h4>
+                        <input class="info-input-field" type="text" value="採樣人簽署後帶入" style="color: rgba(94, 94, 94, 1)";>                                
+                    </div>
+                    <div class="rowright">
+                        <h4>委託人簽署經緯度</h4>
+                        <input class="info-input-field" type="text" value="委託人簽署後帶入" style="color: rgba(94, 94, 94, 1)";>
+                    </div>
+                </div>
+                <div class="signature-row5">
+                    <h4>採證影片</h4>
+                </div>
+                <div class="signature-row6">
+                    <img src="C:\Users\USER\Desktop\藝信coding\project\img\Video2.png">
+                    <img src="C:\Users\USER\Desktop\藝信coding\project\img\Video.png">
+                </div>
+                <div class="buttons" style="margin: 24px 24px 24px 1165px;">
+                    <button class="cancel">取消</button>
+                    <button class="confirm">確定</button>
+                </div>
+            </div>
+    
+            <!-- 法律諮詢 -->
+            <div id="legal" class="tab-content" style="display:none;">
+                <p>這裡是法律諮詢內容。</p>
+            </div>
+    
+            <!-- 預覽證書 -->
+            <div id="preview" class="tab-content" style="display:none;">
+                <p>這裡是預覽證書內容。</p>
+            </div>
+        </div>
+    
+        <script>
+            function showTab(event, tabName) {
+                var i, tabcontent, tablinks;
+    
+                // 隱藏所有 tab-content
+                tabcontent = document.getElementsByClassName("tab-content");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+    
+                // 移除所有 tab 的 active class
+                tablinks = document.getElementsByClassName("tab");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+    
+                // 顯示當前 tab 的內容，並添加 active class 到點擊的 tab
+                document.getElementById(tabName).style.display = "block";
+                event.currentTarget.className += " active";
+            }
+        </script> 
+</body>
+</html>

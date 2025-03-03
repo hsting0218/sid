@@ -1,0 +1,80 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+header {
+    color: black;
+    padding: 1em 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+header p {
+    margin: 0.5em 0 0;
+}
+
+.launch-info {
+    padding: 1em;
+    margin: 1em;
+}
+
+.version-description {
+    padding: 1em;
+    margin: 1em;
+}
+
+.keypoints {
+    background-color: #f4f4f4;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.keypoints h2 {
+    margin-top: 0;
+}
+
+.keypoints ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.keypoints ul li {
+    margin: 0.5em 0;
+}
+
+.keypoints ul li a {
+    text-decoration: none;
+    color: #4CAF50;
+}
+
+keypoints ul li a:hover {
+    text-decoration: underline;
+}
+
+.update {
+    padding: 1em;
+    margin: 1em;
+}
+
+.update h3 {
+    margin-top: 0;
+}
+
+footer {
+    color: black;
+    text-align: center;
+    padding: 1em 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

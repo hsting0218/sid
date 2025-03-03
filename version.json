@@ -1,0 +1,30 @@
+[
+    {
+        "_id": "",
+        "title": "<LINE小祕技>LINE 14.20.0版本更新 支援變更文字格式等4項更新",
+        "date": "December 13, 2024",
+        "catagory": "LINE版本更新",
+        "launch": "LINE 14.20.0更新 上線時間：iOS 2024/12/4上線，Android 2024/11/29上線。",
+        "keypoint": "|LINE 14.20.0 更新重點| （點擊即可至該段落）",
+        "array": [
+            {
+                "subtitle": "支援變更文字格式",
+                "content": "",
+                "image": ""
+            },
+            {
+                "subtitle": "收到來自海外陌生好友訊息時，於1對1及群組聊天室顯示警告訊息",
+                "content": "",
+                "image": ""
+            },{
+                "subtitle": "新增支援將相簿再次分享至原聊天室",
+                "content": "",
+                "image": ""
+            },{
+                "subtitle": "新增支援將記事本再次分享至原聊天室",
+                "content": "",
+                "image": ""
+            }
+        ]
+    }
+]
